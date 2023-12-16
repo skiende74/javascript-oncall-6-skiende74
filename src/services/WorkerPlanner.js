@@ -1,4 +1,3 @@
-import MonthAndDayOfWeek from '../domains/MonthAndDayOfWeek.js';
 import Conditions from '../constants/Conditions.js';
 class WorkerPlanner {
   #MonthAndDayOfWeek;
