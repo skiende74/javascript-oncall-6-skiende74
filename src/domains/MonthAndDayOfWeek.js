@@ -14,6 +14,10 @@ class MonthAndDayOfWeek {
       MonthAndDayOfWeek.parse(MonthAndDayOfWeekStr);
   }
 
+  get() {
+    return [this.#month, this.#dayOfWeek];
+  }
+
   #validate(string) {
     this.#validateFormat(string);
     this.#validateDayOfWeek(string);
@@ -36,8 +40,8 @@ class MonthAndDayOfWeek {
   }
 
   #validateMonthRange(string) {
-    const month = string.split(',')[0];
-    if (!(date >= 1 && date <= 12)) throw new Error(ERROR.message + '4' + date);
+    const month = Number(string.split(',')[0]);
+    if (!(month >= 1 && month <= 12)) throw new Error(ERROR.message);
   }
 
   static parse(string) {

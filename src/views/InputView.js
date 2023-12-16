@@ -1,7 +1,7 @@
 import { Console } from '@woowacourse/mission-utils';
 import OutputView from './OutputView.js';
 import MonthAndDayOfWeek from '../domains/MonthAndDayOfWeek.js';
-import NickNames from '../domains/NickNames.js';
+import NickNamesSet from '../domains/NickNamesSet.js';
 
 const Private = {
   async readMonthAndDayOfWeek() {
@@ -18,7 +18,7 @@ const Private = {
 
   async readWorkerNickNamesForWeekend() {
     return await Console.readLineAsync(
-      '평일 비상 근무 순번대로 사원 닉네임을 입력하세요>',
+      '휴일 비상 근무 순번대로 사원 닉네임을 입력하세요> ',
     );
   },
 

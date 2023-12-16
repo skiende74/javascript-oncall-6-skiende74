@@ -1,27 +1,18 @@
-import ERROR from '../constants/Error';
-class NickNames {
-  #nickNames;
+import ERROR from '../constants/Error.js';
+import NickNames from './NickNames.js';
+class NickNamesSet {
+  #nickNamesForWeekday;
 
-  constructor(nickNamesForWeekday, nickNamesForWeekend) {}
+  #nickNamesForWeekend;
 
-  #validate(strs) {
-    strs = strs.split(',');
-    this.#validateNicknameLength(strs);
-    this.#validateNoDuplicateNickname(strs);
-    this.#validateMinMaxWorkers(strs);
+  constructor(strings) {
+    this.#nickNamesForWeekday = new NickNames(strings[0]);
+    this.#nickNamesForWeekend = new NickNames(strings[1]);
   }
 
-  #validateNicknameLength(strs) {
-    if (!strs.every((nickname) => nickname.length <= 5 && nickname.length >= 1))
-      throw new Error(ERROR.message);
-  }
-
-  #validateNoDuplicateNickname(strs) {
-    if (strs.length !== new Set(strs).size) throw new Error(ERROR.message);
-  }
-
-  #validateMinMaxWorkers(strs) {
-    if (strs.length >= 5 || strs.length <= 35) throw new Error(ERROR.message);
+  get() {
+    return [this.#nickNamesForWeekday, this.#nickNamesForWeekend];
   }
 }
-export default NickNames;
+
+export default NickNamesSet;

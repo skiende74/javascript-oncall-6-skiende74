@@ -1,4 +1,4 @@
-import ERROR from '../constants/Error';
+import ERROR from '../constants/Error.js';
 class NickNames {
   #nickNames;
 
@@ -15,15 +15,16 @@ class NickNames {
 
   #validateNicknameLength(strs) {
     if (!strs.every((nickname) => nickname.length <= 5 && nickname.length >= 1))
-      throw new Error(ERROR.message);
+      throw new Error(ERROR.message + 1);
   }
 
   #validateNoDuplicateNickname(strs) {
-    if (strs.length !== new Set(strs).size) throw new Error(ERROR.message);
+    if (strs.length !== new Set(strs).size) throw new Error(ERROR.message + 2);
   }
 
   #validateMinMaxWorkers(strs) {
-    if (strs.length >= 5 || strs.length <= 35) throw new Error(ERROR.message);
+    if (!(strs.length >= 5 && strs.length <= 35))
+      throw new Error(ERROR.message + 3);
   }
 }
 export default NickNames;
