@@ -7,6 +7,8 @@ class WorkerPlanner {
 
   #NickNamesForWeekend;
 
+  #plan = [];
+
   constructor(monthAndDayOfWeek, nickNamesSet) {
     this.#MonthAndDayOfWeek = monthAndDayOfWeek;
     this.#NickNamesForWeekday = nickNamesSet[0];
@@ -14,15 +16,40 @@ class WorkerPlanner {
   }
 
   create() {
-    const result = [];
-    const month = this.#MonthAndDayOfWeek.getMonth();
+    this.#createRawPlan();
+    this.#preventContinuousWork();
+    return this.#plan;
+  }
 
-    for (let i = 1; i <= Conditions.MAX_DAYS[month]; i++) {
-      result[i - 1] = this.#MonthAndDayOfWeek.isWeekday(i)
+  #createRawPlan() {
+    const month = this.#MonthAndDayOfWeek.getMonth();
+    for (let i = 0; i < Conditions.MAX_DAYS[month]; i++) {
+      this.#plan[i] = this.#MonthAndDayOfWeek.isWeekday(i + 1)
         ? this.#NickNamesForWeekday.getNext()
         : this.#NickNamesForWeekend.getNext();
     }
-    return result;
+  }
+
+  #preventContinuousWork() {
+    const month = this.#MonthAndDayOfWeek.getMonth();
+    for (let i = 1; i < Conditions.MAX_DAYS[month]; i++) {
+      if (this.#plan[i] === this.#plan[i - 1]) {
+        this.#swapWithNextWorker(i);
+      }
+    }
+  }
+
+  #swapWithNextWorker(i) {
+    const month = this.#MonthAndDayOfWeek.getMonth();
+    for (let j = i + 1; j <= Conditions.MAX_DAYS[month]; j++) {
+      if (
+        this.#MonthAndDayOfWeek.isWeekday(i + 1) ===
+        this.#MonthAndDayOfWeek.isWeekday(j + 1)
+      ) {
+        [this.#plan[i], this.#plan[j]] = [this.#plan[j], this.#plan[i]];
+        return;
+      }
+    }
   }
 }
 export default WorkerPlanner;

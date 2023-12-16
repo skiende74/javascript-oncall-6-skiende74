@@ -9,8 +9,9 @@ class App {
     const nickNamesSet = (await InputView.readNickNamesSet()).get();
     OutputView.print([nickNamesSet[0].get(), nickNamesSet[1].get()]);
     const workerPlanner = new WorkerPlanner(monthAndDayOfWeek, nickNamesSet);
-    const result = workerPlanner.create();
-    OutputView.print(result);
+    const plan = workerPlanner.create();
+    OutputView.print(plan);
+    OutputView.printPlan(plan, monthAndDayOfWeek);
   }
 }
 

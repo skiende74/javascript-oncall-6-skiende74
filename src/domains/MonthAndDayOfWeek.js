@@ -19,12 +19,21 @@ class MonthAndDayOfWeek {
   getMonth() {
     return this.#month;
   }
-
-  isWeekday(day) {
-    return (this.#dayOfWeekIndex + day - 1) % 7 <= 4;
+  getMaxDay() {
+    return Conditions.MAX_DAYS[this.#month];
   }
 
-  #getDayOfWeek(day) {
+  isWeekday(day) {
+    return (
+      (this.#dayOfWeekIndex + day - 1) % 7 <= 4 && !this.#isSpecialDay(day)
+    );
+  }
+
+  #isSpecialDay(day) {
+    return Conditions.SPECIAL_DAYS[this.#month].includes(day);
+  }
+
+  getDayOfWeek(day) {
     return this.#POSSIBLE_DAY_OF_WEEKS[(this.#dayOfWeekIndex + day - 1) % 7];
   }
 
