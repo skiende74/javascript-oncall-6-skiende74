@@ -24,12 +24,10 @@ class MonthAndDayOfWeek {
   }
 
   isWeekday(day) {
-    return (
-      (this.#dayOfWeekIndex + day - 1) % 7 <= 4 && !this.#isSpecialDay(day)
-    );
+    return (this.#dayOfWeekIndex + day - 1) % 7 <= 4 && !this.isSpecialDay(day);
   }
 
-  #isSpecialDay(day) {
+  isSpecialDay(day) {
     return Conditions.SPECIAL_DAYS[this.#month].includes(day);
   }
 
@@ -45,17 +43,17 @@ class MonthAndDayOfWeek {
   }
 
   #validateFormat(string) {
-    if (string.split(',').length !== 2) throw new Error(ERROR.message + '1');
+    if (string.split(',').length !== 2) throw new Error(ERROR.message);
   }
 
   #validateDayOfWeek(string) {
     if (!this.#POSSIBLE_DAY_OF_WEEKS.includes(string.split(',')[1]))
-      throw new Error(ERROR.message + '2');
+      throw new Error(ERROR.message);
   }
 
   #validateIntegerMonth(string) {
     if (!Number.isInteger(Number(string.split(',')[0])))
-      throw new Error(ERROR.message + '3');
+      throw new Error(ERROR.message);
   }
 
   #validateMonthRange(string) {

@@ -8,11 +8,11 @@ const OutputView = {
   printPlan(plan, monthAndDayOfWeek) {
     const month = monthAndDayOfWeek.getMonth();
     for (let i = 0; i < monthAndDayOfWeek.getMaxDay(); i++) {
-      OutputView.print(
-        `${month}월 ${i + 1}일 ${monthAndDayOfWeek.getDayOfWeek(i + 1)} ${
-          plan[i]
-        }`,
-      );
+      const specialNotify = monthAndDayOfWeek.isSpecialDay(i + 1)
+        ? '(휴일)'
+        : '';
+      const dayOfWeek = monthAndDayOfWeek.getDayOfWeek(i + 1) + specialNotify;
+      OutputView.print(`${month}월 ${i + 1}일 ${dayOfWeek} ${plan[i]}`);
     }
   },
 };
