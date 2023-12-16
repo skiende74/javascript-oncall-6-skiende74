@@ -2,10 +2,14 @@ import ERROR from '../constants/Error.js';
 class NickNames {
   #nickNames;
 
-  #counter;
+  #counter = 0;
 
   constructor(nickNameStrs) {
     this.#validate(nickNameStrs);
+    this.#nickNames = nickNameStrs.split(',');
+  }
+  get() {
+    return this.#nickNames;
   }
 
   getNext() {

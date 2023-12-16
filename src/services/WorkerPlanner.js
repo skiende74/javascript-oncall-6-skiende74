@@ -1,5 +1,5 @@
-import MonthAndDayOfWeek from '../domains/MonthAndDayOfWeek';
-
+import MonthAndDayOfWeek from '../domains/MonthAndDayOfWeek.js';
+import Conditions from '../constants/Conditions.js';
 class WorkerPlanner {
   #MonthAndDayOfWeek;
 
@@ -9,18 +9,20 @@ class WorkerPlanner {
 
   constructor(monthAndDayOfWeek, nickNamesSet) {
     this.#MonthAndDayOfWeek = monthAndDayOfWeek;
-    [this.#NickNamesForWeekday, this.#NickNamesForWeekend] = nickNamesSet;
+    this.#NickNamesForWeekday = nickNamesSet[0];
+    this.#NickNamesForWeekend = nickNamesSet[1];
   }
 
   create() {
     const result = [];
     const month = this.#MonthAndDayOfWeek.getMonth();
 
-    for (i = 0; i < Conditions.MAX_DAYS[month]; i++) {
-      result[i] = MonthAndDayOfWeek.isWeekday(i)
+    for (let i = 1; i <= Conditions.MAX_DAYS[month]; i++) {
+      result[i - 1] = this.#MonthAndDayOfWeek.isWeekday(i)
         ? this.#NickNamesForWeekday.getNext()
         : this.#NickNamesForWeekend.getNext();
     }
+    return result;
   }
 }
 export default WorkerPlanner;

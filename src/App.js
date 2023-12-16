@@ -1,11 +1,16 @@
 import InputView from './views/InputView.js';
+import OutputView from './views/OutputView.js';
 import { Console } from '@woowacourse/mission-utils';
+import WorkerPlanner from './services/WorkerPlanner.js';
 class App {
   async run() {
-    const input = await InputView.readMonthAndDayOfWeek();
-    Console.print(input.get());
-    const input2 = await InputView.readNickNamesSet();
-    Console.print(input2.get());
+    const monthAndDayOfWeek = await InputView.readMonthAndDayOfWeek();
+    OutputView.print(monthAndDayOfWeek.get());
+    const nickNamesSet = (await InputView.readNickNamesSet()).get();
+    OutputView.print([nickNamesSet[0].get(), nickNamesSet[1].get()]);
+    const workerPlanner = new WorkerPlanner(monthAndDayOfWeek, nickNamesSet);
+    const result = workerPlanner.create();
+    OutputView.print(result);
   }
 }
 
