@@ -4,18 +4,28 @@ import Conditions from '../constants/Conditions.js';
 class MonthAndDayOfWeek {
   #month;
 
-  #dayOfWeek;
+  #dayOfWeekIndex;
 
   #POSSIBLE_DAY_OF_WEEKS = ['월', '화', '수', '목', '금', '토', '일'];
 
   constructor(MonthAndDayOfWeekStr) {
     this.#validate(MonthAndDayOfWeekStr);
-    [this.#month, this.#dayOfWeek] =
-      MonthAndDayOfWeek.parse(MonthAndDayOfWeekStr);
+    this.#parse(MonthAndDayOfWeekStr);
   }
 
   get() {
-    return [this.#month, this.#dayOfWeek];
+    return [this.#month, this.#dayOfWeekIndex];
+  }
+  getMonth() {
+    return this.#month;
+  }
+
+  isWeekday(day) {
+    return (this.#dayOfWeekIndex + day - 1) % 7 <= 4;
+  }
+
+  #getDayOfWeek(day) {
+    return this.#POSSIBLE_DAY_OF_WEEKS[(this.#dayOfWeekIndex + day - 1) % 7];
   }
 
   #validate(string) {
@@ -44,10 +54,10 @@ class MonthAndDayOfWeek {
     if (!(month >= 1 && month <= 12)) throw new Error(ERROR.message);
   }
 
-  static parse(string) {
+  #parse(string) {
     const result = string.split(',');
-    result[0] = Number(result[0]);
-    return result;
+    this.#month = result[0];
+    this.#dayOfWeekIndex = this.#POSSIBLE_DAY_OF_WEEKS.indexOf(result[1]);
   }
 }
 export default MonthAndDayOfWeek;

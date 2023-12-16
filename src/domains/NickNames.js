@@ -2,8 +2,15 @@ import ERROR from '../constants/Error.js';
 class NickNames {
   #nickNames;
 
+  #counter;
+
   constructor(nickNameStrs) {
     this.#validate(nickNameStrs);
+  }
+
+  getNext() {
+    this.#counter += 1;
+    return this.#nickNames[(this.#counter - 1) % this.#nickNames.length];
   }
 
   #validate(strs) {
