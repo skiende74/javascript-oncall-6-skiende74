@@ -1,6 +1,7 @@
 import { Console } from '@woowacourse/mission-utils';
 import OutputView from './OutputView.js';
 import MonthAndDayOfWeek from '../domains/MonthAndDayOfWeek.js';
+import NickNames from '../domains/NickNames.js';
 
 const Private = {
   async readMonthAndDayOfWeek() {
@@ -9,22 +10,22 @@ const Private = {
     );
   },
 
-  async readWorkerNicknameForWeekday() {
+  async readWorkerNickNamesForWeekday() {
     return await Console.readLineAsync(
       '평일 비상 근무 순번대로 사원 닉네임을 입력하세요> ',
     );
   },
 
-  async readWorkerNickNameForWeekend() {
+  async readWorkerNickNamesForWeekend() {
     return await Console.readLineAsync(
       '평일 비상 근무 순번대로 사원 닉네임을 입력하세요>',
     );
   },
 
-  async readWorkerNickName() {
+  async readWorkerNickNamesSet() {
     return [
-      await Private.readWorkerNickNameForWeekday(),
-      await Private.readWorkerNickNameForWeekend(),
+      await Private.readWorkerNickNamesForWeekday(),
+      await Private.readWorkerNickNamesForWeekend(),
     ];
   },
 
@@ -46,6 +47,9 @@ const InputView = {
       Private.readMonthAndDayOfWeek,
       MonthAndDayOfWeek,
     );
+  },
+  async readNickNamesSet() {
+    return Private.robustInput(Private.readWorkerNickNamesSet, NickNamesSet);
   },
 };
 

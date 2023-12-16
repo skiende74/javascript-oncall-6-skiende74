@@ -4,6 +4,7 @@ class App {
   async run() {
     const input = await InputView.readMonthAndDayOfWeek();
     Console.print(input);
+    const input2 = await InputView.readNickNames();
   }
 }
 
